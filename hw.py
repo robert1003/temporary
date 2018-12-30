@@ -62,6 +62,7 @@ model.to(device)
 epochs = 30
 min_valid_loss = np.Inf
 for e in range(epochs):
+    print(e)
     trainloss = 0
     for inputs, labels in trainloader:
         inputs, labels = inputs.to(device), labels.to(device)
