@@ -84,5 +84,5 @@ for e in range(epochs):
         torch.save(model.state_dict(), 'checkpoint.pth')
         min_valid_loss = validloss
 
-    print(f'trainloss: {trainloss/len(trainloader)}, testloss: {testloss/len(testloader)}')
+    print(f'trainloss: {trainloss/len(trainloader)}, validloss: {validloss/len(validloader)}')
 
