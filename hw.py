@@ -40,14 +40,21 @@ model = models.vgg19(pretrained=True)
 for param in model.parameters():
     param.requires_grad = False
 
-model.classifier = nn.Sequential(nn.Linear(1024, 512),
+model.classifier = nn.Sequential(nn.Linear(25088, 8192),
                                  nn.ReLU(),
                                  nn.Dropout(0.2),
-                                 nn.Linear(512, 256),
+                                 nn.Linear(8192, 2048),
                                  nn.ReLU(),
                                  nn.Dropout(0.2),
-                                 nn.Linear(256, 102),
+                                 nn.Linear(2048, 512),
+                                 nn.ReLU(),
+                                 nn.Dropout(0.2),
+                                 nn.Linear(512, 128),
+                                 nn.ReLU(),
+                                 nn.Dropout(0.2),
+                                 nn.Linear(128, 102),
                                  nn.LogSoftmax(dim=1))
+
 criterion = nn.NLLLoss()
 optimizer = optim.Adam(model.classifier.parameters(), lr=0.01)
 model.to(device)
@@ -78,7 +85,7 @@ for e in range(epochs):
         validloss += loss.item()
 
     if validloss < min_valid_loss:
-        torch.save(model.state_dict(), 'checkpoint.pt')
+        torch.save(model.state_dict(), 'checkpoint.pth')
         min_valid_loss = validloss
 
     print(f'trainloss: {trainloss/len(trainloader)}, testloss: {testloss/len(testloader)}')
