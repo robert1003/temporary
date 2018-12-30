@@ -30,7 +30,7 @@ with open('cat_to_name.json', 'r') as f:
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-model = models.vgg19(pretrained=True)
+model = models.densenet169(pretrained=True)
 
 for param in model.parameters():
     param.requires_grad = False
