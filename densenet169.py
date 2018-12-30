@@ -35,19 +35,16 @@ model = models.densenet169(pretrained=True)
 for param in model.parameters():
     param.requires_grad = False
 
-model.classifier = nn.Sequential(nn.Linear(25088, 8192),
+model.classifier = nn.Sequential(nn.Linear(1664, 832),
                                  nn.ReLU(),
                                  nn.Dropout(0.2),
-                                 nn.Linear(8192, 2048),
+                                 nn.Linear(832, 416),
                                  nn.ReLU(),
                                  nn.Dropout(0.2),
-                                 nn.Linear(2048, 512),
+                                 nn.Linear(416, 208),
                                  nn.ReLU(),
                                  nn.Dropout(0.2),
-                                 nn.Linear(512, 128),
-                                 nn.ReLU(),
-                                 nn.Dropout(0.2),
-                                 nn.Linear(128, 102),
+                                 nn.Linear(208, 102),
                                  nn.LogSoftmax(dim=1))
 
 criterion = nn.NLLLoss()
